@@ -1,0 +1,38 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    >
+
+    <item
+        android:id="@+id/top_rated"
+        app:showAsAction="never"
+        android:title="@string/top_rated"/>
+    <item
+        android:id="@+id/popular"
+        app:showAsAction="never"
+        android:title="@string/popular"/>
+
+    <!--<item-->
+        <!--android:id="@+id/action_refresh"-->
+        <!--android:orderInCategory="1"-->
+        <!--android:title="@string/sort"-->
+        <!--android:icon="@drawable/ic_sort_24dp"-->
+        <!--app:showAsAction="always">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/top_rated"-->
+                <!--app:showAsAction="ifRoom"-->
+                <!--android:title="@string/top_rated"/>-->
+            <!--<item-->
+                <!--android:id="@+id/popular"-->
+                <!--app:showAsAction="ifRoom|withText"-->
+                <!--android:title="@string/popular"/>-->
+
+        <!--</menu>-->
+
+    <!--</item>-->
+
+
+
+</menu>
