@@ -15,7 +15,7 @@ import static android.content.ContentValues.TAG;
 public class NetworkUtils {
 
     private final static String API_KEY_PARAM = "api_key";
-    private final static String API_KEY = "3ac700fefd9a3f0f4240afe7140d2176";
+    private final static String API_KEY = "PUT_YOUR_API_KEY_HERE";
     private static final String DB_URL =
             "https://api.themoviedb.org/3/movie";
 
