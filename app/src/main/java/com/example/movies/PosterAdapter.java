@@ -1,6 +1,8 @@
 package com.example.movies;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,21 +12,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PostersViewHolder> {
+    private static final String POSTER_URL =
+            "https://image.tmdb.org/t/p/w185/";
     private final PosterAdapterOnClickHandler mClickHandler;
     private final Context context;
     private ArrayList<Movie> mMovies;
 
-    public PosterAdapter(Context context, PosterAdapterOnClickHandler clickHandler) {
+    PosterAdapter(Context context, PosterAdapterOnClickHandler clickHandler) {
         mClickHandler = clickHandler;
         this.context = context;
     }
-
     @NonNull
     @Override
     public PostersViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -38,8 +39,8 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PostersVie
 
     public void onBindViewHolder(@NonNull PostersViewHolder postersViewHolder, int position) {
         Movie movie = mMovies.get(position);
-        Picasso.get()
-                .load("https://image.tmdb.org/t/p/w185/" + movie.moviePoster)
+        Picasso.with(context)
+                .load(POSTER_URL + movie.moviePoster)
                 .into(postersViewHolder.imageView);
 
     }
@@ -50,7 +51,7 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PostersVie
         return mMovies.size();
     }
 
-    public void setMoviesData(ArrayList<Movie> movie) {
+    void setMoviesData(ArrayList<Movie> movie) {
         mMovies = movie;
         notifyDataSetChanged();
     }
@@ -64,7 +65,7 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PostersVie
         @BindView(R.id.movie_grid_poster)
         ImageView imageView;
 
-        private PostersViewHolder(@NonNull View itemView) {
+        private PostersViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);

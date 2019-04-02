@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,16 +20,16 @@ import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements PosterAdapter.PosterAdapterOnClickHandler {
-@BindView(R.id.recycler_view) RecyclerView recyclerView;
-@BindView(R.id.error_message) TextView mErrorMessageDisplay;
-@BindView(R.id.progress_bar) ProgressBar mLoadingIndicator;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.error_message)
+    TextView mErrorMessageDisplay;
+    @BindView(R.id.progress_bar)
+    ProgressBar mLoadingIndicator;
 
     private PosterAdapter posterAdapter;
     private ArrayList<Movie> simpleJsonMoviesData;
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Pos
 
     private static class FetchMovie extends AsyncTask<String, Void, ArrayList<Movie>> {
 
-        private final WeakReference<MainActivity> activityReference ;
+        private final WeakReference<MainActivity> activityReference;
 
 
         FetchMovie(MainActivity context) {
@@ -107,15 +110,18 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Pos
         @Override
         protected void onPreExecute() {
             final MainActivity activity = activityReference.get();
-            if (activity != null){
-            super.onPreExecute();
-            activity.mLoadingIndicator.setVisibility(View.VISIBLE);
-        }}
+            if (activity != null) {
+                super.onPreExecute();
+                activity.mLoadingIndicator.setVisibility(View.VISIBLE);
+            }
+        }
 
         @Override
         protected ArrayList<Movie> doInBackground(String... strings) {
             final MainActivity activity = activityReference.get();
-            if (activity == null || activity.isFinishing()){ return null;}
+            if (activity == null || activity.isFinishing()) {
+                return null;
+            }
 
             if (strings.length == 0) {
                 return null;
@@ -140,15 +146,16 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Pos
         @Override
         protected void onPostExecute(ArrayList<Movie> movies) {
             final MainActivity activity = activityReference.get();
-         if (activity != null){
-            activity.mLoadingIndicator.setVisibility(View.INVISIBLE);
-            if (movies != null) {
-                activity.showMovieDataView();
-                activity.posterAdapter.setMoviesData(movies);
-            } else {
-                activity.showErrorMessage();
+            if (activity != null) {
+                activity.mLoadingIndicator.setVisibility(View.INVISIBLE);
+                if (movies != null) {
+                    activity.showMovieDataView();
+                    activity.posterAdapter.setMoviesData(movies);
+                } else {
+                    activity.showErrorMessage();
+                }
             }
         }
-    }}
+    }
 }
 

@@ -2,6 +2,7 @@ package com.example.movies;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -9,7 +10,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,6 +25,8 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.movie_overview)
     TextView movieOverView;
 
+    private static final String POSTER_URL =
+            "https://image.tmdb.org/t/p/w185/";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +41,8 @@ public class DetailsActivity extends AppCompatActivity {
         movieRate.setText(stringDouble);
         movieReleaseDate.setText(movies.get(adapterPosition).releaseDate);
         movieOverView.setText(movies.get(adapterPosition).overView);
-        Picasso.get().
-                load("https://image.tmdb.org/t/p/w185/" + movies.get(adapterPosition).moviePoster).
+        Picasso.with(this).
+                load(POSTER_URL + movies.get(adapterPosition).moviePoster).
                 into(moviePoster);
 
 
