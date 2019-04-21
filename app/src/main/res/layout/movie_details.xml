@@ -2,6 +2,7 @@
 
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,7 +21,8 @@
             android:layout_height="300dp"
             android:layout_alignParentStart="true"
             android:contentDescription="@null"
-            android:scaleType="fitStart" />
+            android:scaleType="fitStart"
+            />
 
         <LinearLayout
             android:id="@+id/movie_info"
@@ -71,6 +73,13 @@
                 android:layout_marginBottom="15dp"
                 android:textSize="16sp" />
 
+            <ImageView
+                android:id="@+id/star"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_star_border_24dp" />
+
         </LinearLayout>
 
         <TextView
@@ -89,6 +98,37 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/overview_header"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/trailers_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/movie_overview"
+            android:text="@string/trailers"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/trailers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/trailers_header"
+           />
+        <TextView
+            android:id="@+id/reviews_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/trailers"
+            android:text="@string/reviews"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/reviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reviews_header"
+            />
 
 
     </RelativeLayout>

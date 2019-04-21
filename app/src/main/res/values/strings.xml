@@ -7,4 +7,10 @@
     <string name="release_date">Release Date :</string>
     <string name="overview">Overview :</string>
     <string name="poster">poster</string>
+    <string name="trailers">Trailers</string>
+    <string name="trailer">Trailer</string>
+    <string name="favorite">Favorite</string>
+    <string name="reviews">Reviews</string>
+    <string name="name">Name :</string>
+    <string name="review">Review :</string>
 </resources>

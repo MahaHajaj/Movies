@@ -11,5 +11,8 @@
         android:id="@+id/popular"
         android:title="@string/popular"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/favorite"
+        android:title="@string/favorite"
+        app:showAsAction="never" />
 </menu>

@@ -1,9 +1,12 @@
 package com.example.movies;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +16,15 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.movies.adapter.PosterAdapter;
+import com.example.movies.models.Movie;
 import com.example.movies.utilities.MovieJsonUtils;
 import com.example.movies.utilities.NetworkUtils;
 
 import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,9 +72,8 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Pos
         Context context = this;
         Class destinationClass = DetailsActivity.class;
         Intent intentToStartDetailsActivity = new Intent(context, destinationClass);
-        intentToStartDetailsActivity.putExtra(Intent.EXTRA_TEXT, adapterPosition);
-        intentToStartDetailsActivity.putParcelableArrayListExtra("Movie", simpleJsonMoviesData);
-
+        Movie movie = simpleJsonMoviesData.get(adapterPosition);
+        intentToStartDetailsActivity.putExtra("Movie", movie);
         startActivity(intentToStartDetailsActivity);
     }
 
@@ -94,8 +99,27 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Pos
             loadMoviesData("popular");
             return true;
         }
+        if (itemId == R.id.favorite) {
+            posterAdapter.setMoviesData(null);
+            setUpViewModel();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setUpViewModel() {
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel.getMovies().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(@Nullable List<Movie> movies) {
+                simpleJsonMoviesData.clear();
+                if (movies != null) {
+                    simpleJsonMoviesData.addAll(movies);
+                    posterAdapter.setMoviesData(simpleJsonMoviesData);
+                }
+            }
+        });
     }
 
     private static class FetchMovie extends AsyncTask<String, Void, ArrayList<Movie>> {
@@ -128,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Pos
             }
             String sort_by = strings[0];
             URL movieRequestUrl = NetworkUtils.buildUrl(sort_by);
+
             try {
                 String jsonMovieResponse = NetworkUtils
                         .getResponseFromHttpUrl(movieRequestUrl);
@@ -142,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Pos
                 return null;
             }
         }
+
 
         @Override
         protected void onPostExecute(ArrayList<Movie> movies) {

@@ -1,4 +1,4 @@
-package com.example.movies;
+package com.example.movies.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.movies.R;
+import com.example.movies.models.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,10 +24,11 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PostersVie
     private final Context context;
     private ArrayList<Movie> mMovies;
 
-    PosterAdapter(Context context, PosterAdapterOnClickHandler clickHandler) {
+    public PosterAdapter(Context context, PosterAdapterOnClickHandler clickHandler) {
         mClickHandler = clickHandler;
         this.context = context;
     }
+
     @NonNull
     @Override
     public PostersViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -51,11 +54,10 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PostersVie
         return mMovies.size();
     }
 
-    void setMoviesData(ArrayList<Movie> movie) {
+    public void setMoviesData(ArrayList<Movie> movie) {
         mMovies = movie;
         notifyDataSetChanged();
     }
-
 
     public interface PosterAdapterOnClickHandler {
         void onClick(int adapterPosition);

@@ -11,11 +11,11 @@ import java.net.URL;
 import java.util.Scanner;
 
 import static android.content.ContentValues.TAG;
+import static com.example.movies.BuildConfig.API_KEY;
 
 public class NetworkUtils {
 
     private final static String API_KEY_PARAM = "api_key";
-    private final static String API_KEY = "3ac700fefd9a3f0f4240afe7140d2176";
     private static final String DB_URL =
             "https://api.themoviedb.org/3/movie";
 
@@ -23,6 +23,24 @@ public class NetworkUtils {
         Uri builtUri = Uri.parse(DB_URL).buildUpon().
                 appendEncodedPath(sort_by).
                 appendQueryParameter(API_KEY_PARAM, API_KEY).build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built URI " + url);
+
+        return url;
+    }
+
+    public static URL buildUrl(int MovieID, String query) {
+        String ID = Integer.toString(MovieID);
+        Uri builtUri = Uri.parse(DB_URL).buildUpon()
+                .appendEncodedPath(ID)
+                .appendEncodedPath(query)
+                .appendQueryParameter(API_KEY_PARAM, API_KEY).build();
         URL url = null;
         try {
             url = new URL(builtUri.toString());
