@@ -116,7 +116,9 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
     public void onClick(int adapterPosition) {
         Uri uri = Uri.parse("https://www.youtube.com/watch?v=" + mTrailers.get(adapterPosition).key);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        if (intent.resolveActivity(getPackageManager()) != null){
         startActivity(intent);
+        }
     }
 
     private class MovieAsyncTask extends AsyncTask<Movie, Void, Movie> {
@@ -127,17 +129,12 @@ public class DetailsActivity extends AppCompatActivity implements TrailersAdapte
             DataBase database = DataBase.getDatabase(getApplicationContext());
             Movie movie = database.moviesDAO().getMovie(id);
             List<Integer> IDs = database.moviesDAO().getIDs();
-            System.out.println("IDs" + IDs);
-            System.out.println("idddd" + id);
             if (IDs.isEmpty()) {
                 database.moviesDAO().insertMovie(mMovies);
-                System.out.println(movie.movieName);
-                System.out.println("اظفتها");
                 star.setImageResource(R.drawable.ic_star_24dp);
             }
             if (!(IDs.contains(id))) {
                 database.moviesDAO().insertMovie(mMovies);
-                System.out.println("اظفتها");
                 star.setImageResource(R.drawable.ic_star_24dp);
             } else {
                 database.moviesDAO().deleteMovie(ID);
